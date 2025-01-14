@@ -20,17 +20,21 @@
                <items>
                   <MenuItem mnemonicParsing="false" onAction="#onUndoClick" text="Undo" />
                   <MenuItem mnemonicParsing="false" onAction="#onNegationClick" text="Negation" />
+                  <MenuItem mnemonicParsing="false" onAction="#onThresholdClick" text="Threshold" />
+                  <MenuItem mnemonicParsing="false" onAction="#onRgbAdjustClick" text="RGB Adjustments" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="About">
                <items>
                   <MenuItem mnemonicParsing="false" onAction="#onAboutClick" text="About" />
-               </items></Menu>
+               </items>
+            </Menu>
             <Menu mnemonicParsing="false" text="Exit">
                <items>
                   <MenuItem mnemonicParsing="false" onAction="#onExitSaveClick" text="Save and Exit" />
                   <MenuItem mnemonicParsing="false" onAction="#onExitClick" text="Exit" />
-               </items></Menu>
+               </items>
+            </Menu>
          </menus>
       </MenuBar>
       <Canvas fx:id="canvas" height="455.0" width="720.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0" />

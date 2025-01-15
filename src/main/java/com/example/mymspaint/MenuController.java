@@ -12,6 +12,7 @@ import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
@@ -28,6 +29,9 @@ public class MenuController {
     @FXML
     private Canvas canvas;
 
+    @FXML
+    private AnchorPane rootPane;
+
     private Image loadedImage;
     private GraphicsContext gc;
     private final ArrayList<WritableImage> prevImageList = new ArrayList<>();
@@ -37,6 +41,26 @@ public class MenuController {
         canvas.setFocusTraversable(true);
         canvas.addEventFilter(KeyEvent.KEY_PRESSED, this::onKeyPressed);
         gc = canvas.getGraphicsContext2D();
+
+        // Bind canvas size to root pane size
+        rootPane.widthProperty().addListener((obs, oldVal, newVal) -> resizeCanvas());
+        rootPane.heightProperty().addListener((obs, oldVal, newVal) -> resizeCanvas());
+    }
+
+    private void resizeCanvas() {
+        double newWidth = rootPane.getWidth();
+        double newHeight = rootPane.getHeight();
+
+        if (newWidth > 0 && newHeight > 0) {
+            WritableImage snapshot = new WritableImage((int) canvas.getWidth(), (int) canvas.getHeight());
+            canvas.snapshot(null, snapshot);
+
+            canvas.setWidth(newWidth);
+            canvas.setHeight(newHeight);
+
+            gc.clearRect(0, 0, newWidth, newHeight);
+            gc.drawImage(snapshot, 0, 0, newWidth, newHeight);
+        }
     }
 
     @FXML
@@ -259,7 +283,6 @@ public class MenuController {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         gc.drawImage(adjustedImage, 0, 0);
     }
-
 
     @FXML
     protected void onAboutClick() {
